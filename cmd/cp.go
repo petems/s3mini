@@ -14,7 +14,7 @@ import (
 
 	"gopkg.in/cheggaaa/pb.v1"
 
-	"github.com/spf13/cobra"
+	"github.com/petems/cobra"
 )
 
 type progressWriter struct {

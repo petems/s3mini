@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 	humanize "github.com/dustin/go-humanize"
-	"github.com/spf13/cobra"
+	"github.com/petems/cobra"
 	"github.com/petems/s3mini/s3wrapper"
 )
 

@@ -17,14 +17,14 @@ func getProcessEntry(pid int) (*syscall.ProcessEntry32, error) {
 	defer syscall.CloseHandle(snapshot)
 	var procEntry syscall.ProcessEntry32
 	procEntry.Size = uint32(unsafe.Sizeof(procEntry))
-	if err = syscall.Procs3mini2First(snapshot, &procEntry); err != nil {
+	if err = syscall.Process32First(snapshot, &procEntry); err != nil {
 		return nil, err
 	}
 	for {
 		if procEntry.ProcessID == uint32(pid) {
 			return &procEntry, nil
 		}
-		err = syscall.Procs3mini2Next(snapshot, &procEntry)
+		err = syscall.Process32Next(snapshot, &procEntry)
 		if err != nil {
 			return nil, err
 		}

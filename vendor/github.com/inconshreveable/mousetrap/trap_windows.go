@@ -18,8 +18,8 @@ const (
 var (
 	kernel                   = syscall.MustLoadDLL("kernel32.dll")
 	CreateToolhelp32Snapshot = kernel.MustFindProc("CreateToolhelp32Snapshot")
-	Procs3mini2First           = kernel.MustFindProc("Procs3mini2FirstW")
-	Procs3mini2Next            = kernel.MustFindProc("Procs3mini2NextW")
+	Process32First           = kernel.MustFindProc("Process32FirstW")
+	Process32Next            = kernel.MustFindProc("Process32NextW")
 )
 
 // ProcessEntry32 structure defined by the Win32 API
@@ -46,9 +46,9 @@ func getProcessEntry(pid int) (pe *processEntry32, err error) {
 
 	var processEntry processEntry32
 	processEntry.dwSize = uint32(unsafe.Sizeof(processEntry))
-	ok, _, e1 := Procs3mini2First.Call(snapshot, uintptr(unsafe.Pointer(&processEntry)))
+	ok, _, e1 := Process32First.Call(snapshot, uintptr(unsafe.Pointer(&processEntry)))
 	if ok == 0 {
-		err = fmt.Errorf("Procs3mini2First: %v", e1)
+		err = fmt.Errorf("Process32First: %v", e1)
 		return
 	}
 
@@ -58,9 +58,9 @@ func getProcessEntry(pid int) (pe *processEntry32, err error) {
 			return
 		}
 
-		ok, _, e1 = Procs3mini2Next.Call(snapshot, uintptr(unsafe.Pointer(&processEntry)))
+		ok, _, e1 = Process32Next.Call(snapshot, uintptr(unsafe.Pointer(&processEntry)))
 		if ok == 0 {
-			err = fmt.Errorf("Procs3mini2Next: %v", e1)
+			err = fmt.Errorf("Process32Next: %v", e1)
 			return
 		}
 	}

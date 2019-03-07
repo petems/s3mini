@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
+	"github.com/petems/cobra"
 )
 
 // Version is set by main during build
