@@ -13,16 +13,30 @@ const Version = "0.1.0"
 var GitCommit string
 
 // versionCmd represents the version command
-var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Show the version",
-	Long:  ``,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("s3mini " + GitCommit)
-		fmt.Println("Version: " + Version)
-	},
+func VersionCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "version",
+		Short: "Show the version",
+		Long:  ``,
+		RunE:  runVersionCmd,
+	}
+
+	return cmd
+}
+
+func runVersionCmd(cmd *cobra.Command, args []string) error {
+
+	if GitCommit == "" {
+		GitCommit = "<unknown commit>"
+	}
+
+	versionOutputString := fmt.Sprint("s3mini " + GitCommit + "\n" + "Version: " + Version + "\n")
+
+	fmt.Fprint(cmd.OutOrStdout(), versionOutputString)
+
+	return nil
 }
 
 func init() {
-	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(VersionCommand())
 }

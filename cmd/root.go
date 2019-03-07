@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if showVersion, err := cmd.Flags().GetBool("version"); err == nil && showVersion {
-			versionCmd.Run(cmd, args)
+			runVersionCmd(cmd, args)
 			return
 		}
 		err := cmd.Help()
